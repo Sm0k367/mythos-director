@@ -1,96 +1,89 @@
-# Mythos Director
+# Iron Jarvis
 
-**The most complete AI operating system on the planet.**
+**Your own local-first AI operating system.**
 
-Iron Jarvis architecture + Mythos cognitive core + Omnimedia media swarm + cinematic production frontend.
+Agents that plan, build, review, schedule, remember, and wire themselves into your world — running on *your* machine, under *your* control.
 
-One repo. One deploy. Infinite capability.
-
----
-
-## What it is
-
-Mythos Director is a **production-grade AI operating system** that combines:
-
-- **Iron Jarvis OS foundation** — Supervisor, fail-closed permissions, git review, n8n workflows, LTM, self-dev, desktop, schedules, webhooks, multi-terminal, voice, encrypted vault
-- **Mythos cognitive core** — Mythos reconstruction + agent memory + prompt engineering swarm
-- **Omnimedia media swarm** — Video, image, audio generation agents
-- **Cinematic production frontend** — Beautiful Next.js landing + interactive dashboard + live workflow canvas
-- **Serverless APIs** — All services running on Vercel edge
+No cloud lock-in. No black boxes. Every action logged, every change reviewable, every secret encrypted on your disk.
 
 ---
 
-## 100x Features (all implemented)
+## What Iron Jarvis actually is
 
-### Core OS (Iron Jarvis level)
-- Real workflow execution engine with live streaming
-- Computer-use browser agent (DOM-first, approval-gated)
-- Full desktop app (Electron + auto-update + tray)
-- Voice output (ElevenLabs + local TTS)
-- Self-healing + auto-rollback
+Iron Jarvis turns a fleet of AI agents into a **real operating system**:
 
-### Power Features
-- Evaluation dashboard (real metrics, cost, success rate)
-- Encrypted vault UI + rotation + audit
-- MCP server integration (external tools as native agents)
-- Offline-first mode (Ollama + local Mythos core)
+- A **Supervisor** decomposes your goal and spins up specialist subagents
+- Every tool call passes a **fail-closed permission engine**
+- Code changes land on git branches and **never auto-merge** — you review the diff
+- Four-layer memory + **long-term memory** (Obsidian, Notion, markdown)
+- **n8n-style visual workflow canvas** — agents can build and edit workflows you then see and control
+- **Voice-to-text** + encrypted secrets vault + schedules + webhooks
+- **Self-development** — an opt-in Maintainer agent can improve Iron Jarvis itself (review-gated)
+- **Multimodal intelligence** — real-time video generation, 3D worlds, live agent collaboration
+- **Real Agent Economy** — publish, sell, and install skills with automatic payments
+- **Self-evolving platform** — the system proposes and ships better versions of itself
+- **Planetary orchestration** — thousands of agents, cross-org workflows, global edge runtime
+- **Enterprise fortress** — SSO, advanced RBAC, compliance automation
+- **Developer platform** — SDKs, white-label, plugin ecosystem
 
-### Growth & Scale
-- Skills / agent marketplace (publish, discover, install)
-- Team mode + org memory + RBAC (multi-user, permissions)
-- Mobile PWA + native apps ready
-- One-click deploy + marketing site
-- Compliance export (SOC2/GDPR ready)
+Runs **fully offline** with local models. Bring your own Claude / OpenAI key when you want the real thing.
 
 ---
 
-## Quick Start
+## Production
 
-### Production (recommended)
+**Live:** https://web-kh4qi9w7n-epic-tech-ai-projects.vercel.app
 
-Visit: https://web-b534wgt2w-epic-tech-ai-projects.vercel.app
+**Repo:** https://github.com/Sm0k367/epic-iron-jarvis
 
-### Local
-
-```bash
-git clone https://github.com/Sm0k367/mythos-director
-cd mythos-director
-npm install
-npm run dev
-```
-
-Open http://localhost:3000
+**Desktop app** (recommended): Download the installer from Releases.
 
 ---
 
 ## Architecture
 
 ```
-Dashboard (Next.js + Workflow Canvas)
+Dashboard (Next.js + Workflow Canvas + Voice)
          ↓
-Supervisor (Iron Jarvis + Mythos Core)
+Supervisor + Permission Engine
          ↓
-Permission Engine (fail-closed)
+Specialist Agents: Mythos Core | Omnimedia Swarm | Browser | Maintainer | Economy
          ↓
-Agents: Mythos Core | Omnimedia Swarm | Browser | Maintainer
-         ↓
-Git Review | LTM | MCP | Vault | Workflows | Self-healing
+Git Review | LTM | MCP | Vault | Workflows | Self-Healing | Edge Runtime
 ```
 
 ---
 
-## Production
+## 1000x Vision (already in progress)
 
-- **Live:** https://web-b534wgt2w-epic-tech-ai-projects.vercel.app
-- **Repo:** https://github.com/Sm0k367/mythos-director
-- **Custom domain ready** (mythos.director)
-
----
-
-## License
-
-MIT — build whatever you want.
+- Real Agent Economy with Stripe payments
+- Self-evolving platform that improves itself daily
+- Multimodal God-Mode (video, 3D, live collaboration)
+- Planetary-scale orchestration
+- Enterprise SSO + compliance
+- Global edge + P2P runtime
+- Full developer platform + marketplace
 
 ---
 
-**Mythos Director** — Built by agents, for agents.
+## Installation
+
+### Desktop App (Windows – zero dependencies)
+
+Download the latest `Iron Jarvis Setup.exe` from Releases.
+
+### From Source
+
+```bash
+git clone https://github.com/Sm0k367/epic-iron-jarvis
+cd epic-iron-jarvis
+uv sync --extra dev
+cd dashboard && pnpm install && pnpm build
+uv run ironjarvis up
+```
+
+---
+
+**Iron Jarvis** — the AI operating system you actually own.
+
+Built with Claude Code.
