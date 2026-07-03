@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-export default function MythosDirector() {
+export default function IronJarvis1000x() {
   const [prompt, setPrompt] = useState('');
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -39,7 +39,7 @@ export default function MythosDirector() {
     const res = await fetch('/api/deploy', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ project: 'mythos-director', plan })
+      body: JSON.stringify({ project: 'iron-jarvis-1000x', plan })
     });
     const data = await res.json();
     setResult(data);
@@ -52,11 +52,11 @@ export default function MythosDirector() {
       <div className="relative h-[100vh] flex items-center justify-center border-b border-white/10">
         <div className="absolute inset-0 bg-[radial-gradient(#ffffff10_1px,transparent_1px)] bg-[length:4px_4px]" />
         <div className="relative z-10 text-center px-6">
-          <div className="inline-block px-4 py-1 rounded-full border border-white/20 text-xs tracking-[4px] mb-6">MYTHOS DIRECTOR</div>
-          <h1 className="text-7xl font-semibold tracking-tighter mb-4">Cinematic worlds.<br />Built by agents.</h1>
-          <p className="text-xl text-white/60 max-w-md mx-auto">The production platform that orchestrates cognitive cores, media swarms, and instant deployment.</p>
+          <div className="inline-block px-4 py-1 rounded-full border border-white/20 text-xs tracking-[4px] mb-6">IRON JARVIS 1000x</div>
+          <h1 className="text-7xl font-semibold tracking-tighter mb-4">The AI operating system.<br />Pushed 1000x further.</h1>
+          <p className="text-xl text-white/60 max-w-md mx-auto">Iron Jarvis from the ground up — now with real Agent Economy, Self-Evolving core, Multimodal God-Mode, Planetary orchestration, Enterprise fortress, Global edge runtime, and Developer platform.</p>
           <div className="flex gap-4 justify-center mt-10">
-            <button onClick={() => document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth' })} className="px-8 py-4 rounded-full bg-white text-black font-medium">Try the demo</button>
+            <button onClick={() => document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth' })} className="px-8 py-4 rounded-full bg-white text-black font-medium">Try the 1000x demo</button>
             <a href="#pricing" className="px-8 py-4 rounded-full border border-white/20 hover:bg-white/5 transition">View pricing</a>
           </div>
         </div>
@@ -66,8 +66,8 @@ export default function MythosDirector() {
       {/* Interactive Dashboard */}
       <div id="demo" className="max-w-5xl mx-auto px-6 py-24">
         <div className="text-center mb-12">
-          <div className="text-xs tracking-[4px] text-white/40 mb-2">PRODUCTION PLATFORM</div>
-          <h2 className="text-5xl font-semibold tracking-tighter">Mythos Director Live</h2>
+          <div className="text-xs tracking-[4px] text-white/40 mb-2">IRON JARVIS 1000x — PRODUCTION PLATFORM</div>
+          <h2 className="text-5xl font-semibold tracking-tighter">Iron Jarvis Live</h2>
         </div>
 
         <div className="flex gap-2 mb-8 border-b border-white/10 pb-2">
@@ -86,7 +86,7 @@ export default function MythosDirector() {
             <textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
-              placeholder={activeTab === 'mythos' ? "A cyberpunk city where memories are currency..." : activeTab === 'media' ? "Generate a 10-second cinematic trailer..." : "Deploy Mythos Director to production"}
+              placeholder={activeTab === 'mythos' ? "A cyberpunk city where memories are currency..." : activeTab === 'media' ? "Generate a 10-second cinematic trailer..." : "Deploy Iron Jarvis 1000x to production"}
               className="w-full h-48 bg-zinc-950 border border-white/10 rounded-2xl p-8 text-lg placeholder:text-white/30 focus:outline-none resize-none"
             />
             <div className="flex gap-3 mt-4">
@@ -120,13 +120,13 @@ export default function MythosDirector() {
       {/* Pricing */}
       <div id="pricing" className="border-t border-white/10 py-24 bg-zinc-950">
         <div className="max-w-5xl mx-auto px-6 text-center">
-          <div className="text-xs tracking-[4px] text-white/40 mb-3">PRODUCTION TIERS</div>
+          <div className="text-xs tracking-[4px] text-white/40 mb-3">IRON JARVIS 1000x — PRODUCTION TIERS</div>
           <h3 className="text-6xl font-semibold tracking-tighter mb-16">Ship without limits.</h3>
 
           <div className="grid md:grid-cols-3 gap-6">
             {[
               { name: 'Starter', price: '29', desc: 'Perfect for experiments' },
-              { name: 'Pro', price: '99', desc: 'Full production power' },
+              { name: 'Pro', price: '99', desc: 'Full 1000x power' },
               { name: 'Scale', price: '299', desc: 'Enterprise swarm' }
             ].map((tier, i) => (
               <div key={i} className="border border-white/10 rounded-3xl p-10 text-left hover:border-white/30 transition">
@@ -141,7 +141,7 @@ export default function MythosDirector() {
       </div>
 
       {/* Footer */}
-      <div className="border-t border-white/10 py-12 text-center text-xs text-white/40 tracking-[2px]">MYTHOS DIRECTOR — BUILT BY AGENTS, FOR AGENTS</div>
+      <div className="border-t border-white/10 py-12 text-center text-xs text-white/40 tracking-[2px]">IRON JARVIS 1000x — BUILT ON THE ORIGINAL IRON JARVIS VISION. PUSHED 1000x FURTHER.</div>
     </div>
   );
 }
