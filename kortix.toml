@@ -1,0 +1,58 @@
+kortix_version = 1
+
+[project]
+name = "Smoke"
+description = ""
+
+[runtime]
+root = ".opencode"
+
+[env]
+required = []
+optional = []
+
+[[apps]]
+slug = "test-site6"
+name = "test-site6"
+enabled = true
+domains = []
+
+[apps.source]
+type = "git"
+repo = "https://github.com/templatecookie/poco-html"
+branch = "master"
+
+[[connectors]]
+slug = "github"
+provider = "pipedream"
+credential = "shared"
+app = "github"
+account = "default"
+
+[[connectors]]
+slug = "supabase"
+provider = "pipedream"
+credential = "shared"
+app = "supabase"
+account = "default"
+
+[[connectors]]
+slug = "vercel_token_auth"
+provider = "pipedream"
+credential = "shared"
+app = "vercel_token_auth"
+account = "default"
+
+[[connectors]]
+slug = "slack_v2"
+provider = "pipedream"
+credential = "shared"
+app = "slack_v2"
+account = "default"
+
+[[connectors]]
+slug = "stripe"
+provider = "pipedream"
+credential = "shared"
+app = "stripe"
+account = "default"
