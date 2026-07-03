@@ -86,14 +86,43 @@ Without `OPENAI_API_KEY`, the pipeline runs in demo mode with template fallbacks
 
 ---
 
-## Deploy
+## Deploy to Vercel
+
+### Option A — GitHub integration (recommended)
+
+1. Import https://github.com/Sm0k367/mythos-director in [Vercel](https://vercel.com/new)
+2. Set **Root Directory** to the repo root (uses root `vercel.json`)
+3. Add environment variables in the Vercel dashboard (never commit these):
+   - `OPENAI_API_KEY` — creative generation
+   - `HF_TOKEN` — optional hero images
+4. Push to `main` — Vercel auto-deploys
+
+### Option B — GitHub Actions
+
+Add these repository secrets under **Settings → Secrets → Actions**:
+
+| Secret | Where to find it |
+|--------|------------------|
+| `VERCEL_TOKEN` | Vercel → Account Settings → Tokens |
+| `VERCEL_ORG_ID` | Vercel project → Settings → General |
+| `VERCEL_PROJECT_ID` | Vercel project → Settings → General |
+
+Pushes to `main` run `.github/workflows/vercel-deploy.yml` after a secret scan passes.
+
+### Option C — CLI
 
 ```bash
-cd apps/web
-npm run build
+vercel login
+cd mythos-director
+vercel deploy --prod
 ```
 
-Deploy to Vercel with environment variables set in the project dashboard.
+### Security
+
+- Never commit `.env`, `.env.local`, or API keys
+- `.env.example` contains placeholders only
+- Run `node scripts/check-no-secrets.mjs` before pushing
+- Rotate any token that was shared in chat or logs
 
 ---
 

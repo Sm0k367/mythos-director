@@ -5,7 +5,11 @@ import { z } from 'zod';
 const app = express();
 app.use(express.json());
 
-const stripe = new Stripe(process.env.STRIPE_API_KEY!, { apiVersion: '2024-04-10' });
+const stripeKey = process.env.STRIPE_SECRET_KEY ?? process.env.STRIPE_API_KEY;
+if (!stripeKey) {
+  throw new Error('STRIPE_SECRET_KEY is not configured');
+}
+const stripe = new Stripe(stripeKey, { apiVersion: '2024-04-10' });
 
 const DeployRequest = z.object({
   project: z.string().min(2),
