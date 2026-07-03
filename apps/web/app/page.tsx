@@ -1,147 +1,103 @@
-'use client';
+import Link from 'next/link';
 
-import { useState } from 'react';
+const steps = [
+  {
+    title: 'Submit your brief',
+    desc: 'Product, audience, goal, and tone — the inputs every agency needs on day one.',
+  },
+  {
+    title: 'Director plans the campaign',
+    desc: 'Creative concept, messaging pillars, storyboard, and 15-second script generated automatically.',
+  },
+  {
+    title: 'Assets are produced',
+    desc: 'Hero image and platform-specific copy for Instagram, LinkedIn, and X — ready to review.',
+  },
+  {
+    title: 'Export and ship',
+    desc: 'Download the full campaign package as JSON and hand off to your design or media team.',
+  },
+];
 
-export default function IronJarvis1000x() {
-  const [prompt, setPrompt] = useState('');
-  const [result, setResult] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState<'mythos' | 'media' | 'deploy'>('mythos');
-
-  const callMythos = async () => {
-    if (!prompt) return;
-    setLoading(true);
-    const res = await fetch('/api/mythos', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt })
-    });
-    const data = await res.json();
-    setResult(data);
-    setLoading(false);
-  };
-
-  const callOrchestrate = async (type: string) => {
-    if (!prompt) return;
-    setLoading(true);
-    const res = await fetch('/api/orchestrate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt, type })
-    });
-    const data = await res.json();
-    setResult(data);
-    setLoading(false);
-  };
-
-  const callDeploy = async (plan: string) => {
-    setLoading(true);
-    const res = await fetch('/api/deploy', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ project: 'iron-jarvis-1000x', plan })
-    });
-    const data = await res.json();
-    setResult(data);
-    setLoading(false);
-  };
-
+export default function Home() {
   return (
-    <div className="min-h-screen bg-black text-white font-sans">
-      {/* Hero */}
-      <div className="relative h-[100vh] flex items-center justify-center border-b border-white/10">
-        <div className="absolute inset-0 bg-[radial-gradient(#ffffff10_1px,transparent_1px)] bg-[length:4px_4px]" />
-        <div className="relative z-10 text-center px-6">
-          <div className="inline-block px-4 py-1 rounded-full border border-white/20 text-xs tracking-[4px] mb-6">IRON JARVIS 1000x</div>
-          <h1 className="text-7xl font-semibold tracking-tighter mb-4">The AI operating system.<br />Pushed 1000x further.</h1>
-          <p className="text-xl text-white/60 max-w-md mx-auto">Iron Jarvis from the ground up — now with real Agent Economy, Self-Evolving core, Multimodal God-Mode, Planetary orchestration, Enterprise fortress, Global edge runtime, and Developer platform.</p>
-          <div className="flex gap-4 justify-center mt-10">
-            <button onClick={() => document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth' })} className="px-8 py-4 rounded-full bg-white text-black font-medium">Try the 1000x demo</button>
-            <a href="#pricing" className="px-8 py-4 rounded-full border border-white/20 hover:bg-white/5 transition">View pricing</a>
+    <main>
+      <section className="relative min-h-[85vh] flex items-center justify-center border-b border-white/10">
+        <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] bg-[length:4px_4px]" />
+        <div className="relative z-10 text-center px-6 max-w-3xl">
+          <p className="text-xs tracking-[0.3em] text-white/40 mb-6 uppercase">
+            AI Campaign Production Studio
+          </p>
+          <h1 className="text-5xl md:text-6xl font-semibold tracking-tighter mb-6 leading-tight">
+            From brief to campaign package in minutes
+          </h1>
+          <p className="text-lg text-white/60 mb-10 leading-relaxed">
+            Mythos Director is built for marketing teams, agencies, and founders who need
+            creative direction, storyboards, visuals, and social copy — without waiting on a
+            full production cycle.
+          </p>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Link
+              href="/campaigns/new"
+              className="px-8 py-4 rounded-full bg-white text-black font-medium hover:bg-white/90 transition"
+            >
+              Start a campaign
+            </Link>
+            <Link
+              href="/workflows"
+              className="px-8 py-4 rounded-full border border-white/20 hover:bg-white/5 transition"
+            >
+              View live pipeline
+            </Link>
           </div>
         </div>
-        <div className="absolute bottom-10 text-xs tracking-[3px] text-white/40">SCROLL TO BEGIN</div>
-      </div>
+      </section>
 
-      {/* Interactive Dashboard */}
-      <div id="demo" className="max-w-5xl mx-auto px-6 py-24">
-        <div className="text-center mb-12">
-          <div className="text-xs tracking-[4px] text-white/40 mb-2">IRON JARVIS 1000x — PRODUCTION PLATFORM</div>
-          <h2 className="text-5xl font-semibold tracking-tighter">Iron Jarvis Live</h2>
-        </div>
-
-        <div className="flex gap-2 mb-8 border-b border-white/10 pb-2">
-          {(['mythos','media','deploy'] as const).map(tab => (
-            <button key={tab} onClick={() => setActiveTab(tab)} className={`px-6 py-2 text-sm rounded-full transition ${activeTab === tab ? 'bg-white text-black' : 'hover:bg-white/5'}`}>
-              {tab === 'mythos' && 'Cognitive Core'}
-              {tab === 'media' && 'Media Orchestrator'}
-              {tab === 'deploy' && 'Deploy & Bill'}
-            </button>
+      <section className="max-w-5xl mx-auto px-6 py-24">
+        <h2 className="text-3xl font-semibold tracking-tight mb-4 text-center">
+          How it works
+        </h2>
+        <p className="text-white/50 text-center mb-16 max-w-xl mx-auto">
+          A real production workflow — not a demo chatbot. Every step streams live so your
+          team can review as assets are created.
+        </p>
+        <div className="grid md:grid-cols-2 gap-6">
+          {steps.map((step, i) => (
+            <div
+              key={step.title}
+              className="border border-white/10 rounded-2xl p-8 hover:border-white/20 transition"
+            >
+              <div className="text-xs text-white/40 mb-3">Step {i + 1}</div>
+              <h3 className="text-xl font-medium mb-2">{step.title}</h3>
+              <p className="text-white/60 text-sm leading-relaxed">{step.desc}</p>
+            </div>
           ))}
         </div>
+      </section>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-          {/* Input */}
-          <div className="lg:col-span-3">
-            <textarea
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              placeholder={activeTab === 'mythos' ? "A cyberpunk city where memories are currency..." : activeTab === 'media' ? "Generate a 10-second cinematic trailer..." : "Deploy Iron Jarvis 1000x to production"}
-              className="w-full h-48 bg-zinc-950 border border-white/10 rounded-2xl p-8 text-lg placeholder:text-white/30 focus:outline-none resize-none"
-            />
-            <div className="flex gap-3 mt-4">
-              {activeTab === 'mythos' && <button onClick={callMythos} disabled={loading} className="flex-1 py-4 rounded-full bg-white text-black font-medium disabled:opacity-50">Invoke Mythos Core</button>}
-              {activeTab === 'media' && (
-                <>
-                  <button onClick={() => callOrchestrate('video')} disabled={loading} className="flex-1 py-4 rounded-full border border-white/20 hover:bg-white/5 disabled:opacity-50">Generate Video</button>
-                  <button onClick={() => callOrchestrate('image')} disabled={loading} className="flex-1 py-4 rounded-full border border-white/20 hover:bg-white/5 disabled:opacity-50">Generate Image</button>
-                </>
-              )}
-              {activeTab === 'deploy' && (
-                <>
-                  <button onClick={() => callDeploy('starter')} disabled={loading} className="flex-1 py-4 rounded-full border border-white/20 hover:bg-white/5 disabled:opacity-50">Starter — $29</button>
-                  <button onClick={() => callDeploy('pro')} disabled={loading} className="flex-1 py-4 rounded-full border border-white/20 hover:bg-white/5 disabled:opacity-50">Pro — $99</button>
-                </>
-              )}
-            </div>
-          </div>
-
-          {/* Output */}
-          <div className="lg:col-span-2 bg-zinc-950 border border-white/10 rounded-2xl p-8 min-h-[280px]">
-            {!result && !loading && <div className="h-full flex items-center justify-center text-white/30 text-sm tracking-widest">OUTPUT WILL APPEAR HERE</div>}
-            {loading && <div className="h-full flex items-center justify-center">Orchestrating agents...</div>}
-            {result && (
-              <pre className="text-sm text-white/80 whitespace-pre-wrap font-mono">{JSON.stringify(result, null, 2)}</pre>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Pricing */}
-      <div id="pricing" className="border-t border-white/10 py-24 bg-zinc-950">
-        <div className="max-w-5xl mx-auto px-6 text-center">
-          <div className="text-xs tracking-[4px] text-white/40 mb-3">IRON JARVIS 1000x — PRODUCTION TIERS</div>
-          <h3 className="text-6xl font-semibold tracking-tighter mb-16">Ship without limits.</h3>
-
-          <div className="grid md:grid-cols-3 gap-6">
+      <section className="border-t border-white/10 bg-zinc-950 py-24">
+        <div className="max-w-5xl mx-auto px-6">
+          <h2 className="text-3xl font-semibold tracking-tight mb-12 text-center">
+            What you get
+          </h2>
+          <div className="grid sm:grid-cols-3 gap-6 text-center">
             {[
-              { name: 'Starter', price: '29', desc: 'Perfect for experiments' },
-              { name: 'Pro', price: '99', desc: 'Full 1000x power' },
-              { name: 'Scale', price: '299', desc: 'Enterprise swarm' }
-            ].map((tier, i) => (
-              <div key={i} className="border border-white/10 rounded-3xl p-10 text-left hover:border-white/30 transition">
-                <div className="text-sm tracking-widest text-white/40">{tier.name.toUpperCase()}</div>
-                <div className="text-7xl font-semibold tracking-tighter my-4">${tier.price}<span className="text-2xl align-super text-white/40">/mo</span></div>
-                <div className="text-white/60 mb-10">{tier.desc}</div>
-                <button onClick={() => { setActiveTab('deploy'); document.getElementById('demo')?.scrollIntoView({ behavior: 'smooth' }); }} className="w-full py-4 rounded-full bg-white text-black font-medium">Deploy now</button>
+              { label: 'Creative direction', detail: 'Concept, taglines, messaging pillars' },
+              { label: 'Storyboard + script', detail: '4-shot board with 15s voiceover' },
+              { label: 'Ready-to-ship assets', detail: 'Hero image + social copy' },
+            ].map((item) => (
+              <div key={item.label} className="border border-white/10 rounded-2xl p-8">
+                <div className="font-medium mb-2">{item.label}</div>
+                <div className="text-sm text-white/50">{item.detail}</div>
               </div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Footer */}
-      <div className="border-t border-white/10 py-12 text-center text-xs text-white/40 tracking-[2px]">IRON JARVIS 1000x — BUILT ON THE ORIGINAL IRON JARVIS VISION. PUSHED 1000x FURTHER.</div>
-    </div>
+      <footer className="border-t border-white/10 py-10 text-center text-xs text-white/40">
+        Mythos Director — AI campaign production for real marketing teams
+      </footer>
+    </main>
   );
 }

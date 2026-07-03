@@ -1,29 +1,53 @@
 import { NextResponse } from 'next/server';
+import { chatCompletion } from '@/lib/openai';
+import type { CampaignBrief, CreativeDirection } from '@/lib/types';
 
 export async function POST(request: Request) {
-  const { prompt, agents = ['mythos', 'prompt-engineer'] } = await request.json();
+  const body = await request.json();
+  const { prompt, brief } = body as { prompt?: string; brief?: CampaignBrief };
 
-  const response = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: 'gpt-4o',
-      messages: [
-        { role: 'system', content: 'You are the Mythos cognitive core. Orchestrate specialized agents to build cinematic worlds.' },
-        { role: 'user', content: prompt }
+  const input = brief ?? {
+    product: prompt || 'Unknown product',
+    audience: 'General consumers',
+    goal: 'Increase brand awareness',
+    tone: 'Professional',
+  };
+
+  try {
+    const raw = await chatCompletion(
+      [
+        {
+          role: 'system',
+          content: `You are Mythos Director, a senior creative director.
+Given a campaign brief, return valid JSON with: concept, taglines (3), messagingPillars (3), colorPalette (4 hex), moodKeywords (4).
+No markdown.`,
+        },
+        { role: 'user', content: JSON.stringify(input) },
       ],
-      temperature: 0.9
-    })
-  });
+      { json: true }
+    );
 
-  const data = await response.json();
+    const creative = JSON.parse(raw) as CreativeDirection;
 
-  return NextResponse.json({
-    mythos: data.choices[0].message.content,
-    agents_invoked: agents,
-    timestamp: new Date().toISOString()
-  });
+    return NextResponse.json({
+      creative,
+      brief: input,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Generation failed';
+
+    return NextResponse.json({
+      creative: {
+        concept: `Campaign for ${input.product} targeting ${input.audience}`,
+        taglines: [`${input.product} — ${input.goal}`],
+        messagingPillars: [input.goal],
+        colorPalette: ['#0f0f0f', '#e94560', '#f5f5f5'],
+        moodKeywords: [input.tone, 'modern'],
+      },
+      brief: input,
+      note: message.includes('OPENAI_API_KEY') ? 'Demo mode — set OPENAI_API_KEY for live generation' : message,
+      timestamp: new Date().toISOString(),
+    });
+  }
 }

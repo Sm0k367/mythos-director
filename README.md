@@ -1,119 +1,108 @@
 # Mythos Director
 
-**Iron Jarvis 1000x**
+**AI Campaign Production Studio**
 
-This is the **1000x evolution** of the original Iron Jarvis operating system from https://github.com/Sm0k367/epic-iron-jarvis.
-
-The original Iron Jarvis gave you a powerful local-first AI OS.  
-**Mythos Director is what happens when you take that foundation and push it 1000x further.**
+Mythos Director turns marketing briefs into production-ready campaign packages. Marketing teams, agencies, and founders use it to go from product + audience + goal to creative direction, storyboards, hero images, and platform copy — in minutes instead of days.
 
 ---
 
-## What 1000x Means
+## Real-world use case
 
-| Original Iron Jarvis               | Mythos Director (1000x)                                      |
-|------------------------------------|---------------------------------------------------------------|
-| Supervisor + agents                | Self-evolving platform that improves itself daily             |
-| Basic workflows                    | Real Agent Economy with Stripe payments + marketplace         |
-| Local memory                       | Planetary-scale orchestration + cross-org memory              |
-| Permission engine                  | Enterprise Fortress (SSO, advanced RBAC, compliance)          |
-| Text + basic tools                 | Multimodal God-Mode (real-time video, 3D, live collaboration) |
-| Desktop app                        | Global Edge Runtime + P2P sync                                |
-| Self-development                   | Full Developer Platform + SDKs + white-label                  |
-| Text-only frontend                 | Production-grade cinematic media intelligence                 |
+**Problem:** Small marketing teams spend days in kickoff meetings, creative briefs, and first-draft production before anything is reviewable.
 
----
+**Solution:** Submit a brief → Mythos Director runs a live production pipeline → export a JSON package your design and media teams can execute on.
 
-## Core 1000x Systems (Production Ready)
+### What each campaign produces
 
-### 1. Real Agent Economy
-Publish skills → automatic Stripe checkout → buyer pays → encrypted code delivered + auto-installed.
-
-### 2. Self-Evolving Loop
-The platform analyzes its own performance, proposes real code changes, gets human approval, and ships better versions of itself.
-
-### 3. Multimodal God-Mode
-Real-time video generation, 3D world building, and live multi-agent collaboration using state-of-the-art Hugging Face models.
-
-### 4. Planetary Orchestration
-Thousands of agents, org-level memory, cross-organization workflows.
-
-### 5. Enterprise Fortress
-SSO, advanced RBAC, automated compliance reporting.
-
-### 6. Global Edge Runtime
-Edge-native execution, P2P sync, true offline-first.
-
-### 7. Developer Platform
-SDKs, custom runtimes, white-label, plugin ecosystem.
+| Deliverable | Description |
+|-------------|-------------|
+| Creative direction | Concept, 3 taglines, messaging pillars, color palette |
+| Storyboard | 4-shot board with durations and visual prompts |
+| Voiceover script | 15-second commercial script |
+| Hero image | Generated visual (Stable Diffusion XL when `HF_TOKEN` is set) |
+| Social copy | Headline, Instagram, LinkedIn, X, and CTA — ready to publish |
+| Export | Full campaign package as downloadable JSON |
 
 ---
 
 ## Architecture
 
 ```
-Iron Jarvis 1000x
-
-Dashboard (Cinematic Next.js + Live Workflow Canvas)
-         ↓
-Supervisor + Permission Engine (Iron Jarvis foundation)
-         ↓
-1000x Layers
-  - Agent Economy (payments + marketplace)
-  - Self-Evolving Core
-  - Multimodal God-Mode (Hugging Face video + image + audio)
-  - Planetary Orchestrator
-  - Enterprise Fortress
-  - Global Edge Runtime
-  - Developer Platform
-
-Specialist Swarms
-  - Mythos Cognitive Core
-  - Omnimedia Media Swarm
-  - Browser Agent (computer-use)
-  - Maintainer (self-dev)
+Marketing Brief
+      ↓
+Campaign Pipeline (SSE stream)
+  1. Brief analysis
+  2. Creative direction      ← OpenAI gpt-4o-mini
+  3. Storyboard + script     ← OpenAI gpt-4o-mini
+  4. Hero image              ← Hugging Face SDXL (optional)
+  5. Social copy             ← OpenAI gpt-4o-mini
+  6. Human review + export
+      ↓
+Campaign Package (JSON)
 ```
 
----
-
-## Production
-
-**Live:** https://web-f3daal0ju-epic-tech-ai-projects.vercel.app
-
-**Repo:** https://github.com/Sm0k367/mythos-director
-
-This is the **production-grade, 1000x version** of the Iron Jarvis vision.
+Built on Next.js 16 with serverless API routes. No database required for MVP — campaigns are stored in-memory per server instance (swap for Postgres/Redis in production).
 
 ---
 
-## Relationship to the Original
-
-- `epic-iron-jarvis` = The original Iron Jarvis OS (the blueprint)
-- `mythos-director` = **Iron Jarvis 1000x** — the complete, production, next-generation realization
-
-Everything that was great in the original has been kept and massively extended.
-
----
-
-## Quick Start
-
-### Desktop App (Coming Soon)
-
-Download the Iron Jarvis 1000x installer from Releases.
-
-### From Source
+## Quick start
 
 ```bash
 git clone https://github.com/Sm0k367/mythos-director
 cd mythos-director
+cp .env.example apps/web/.env.local
+# Add your OPENAI_API_KEY to apps/web/.env.local
+
+cd apps/web
 npm install
 npm run dev
 ```
 
 Open http://localhost:3000
 
+### Environment variables
+
+| Variable | Required | Purpose |
+|----------|----------|---------|
+| `OPENAI_API_KEY` | Recommended | Creative direction, storyboard, copy |
+| `HF_TOKEN` | Optional | Real hero image generation |
+| `STRIPE_SECRET_KEY` | Optional | Deployment billing (future) |
+
+Without `OPENAI_API_KEY`, the pipeline runs in demo mode with template fallbacks.
+
 ---
 
-**Iron Jarvis 1000x** — The operating system that builds the future.
+## Routes
 
-Built on the original Iron Jarvis vision. Pushed 1000x further.
+| Path | Description |
+|------|-------------|
+| `/` | Landing page |
+| `/campaigns/new` | Create a campaign brief |
+| `/campaigns` | List campaigns |
+| `/campaigns/[id]` | Live pipeline + results |
+| `/workflows` | Pipeline demo with SSE stream |
+| `/api/campaigns` | REST API for campaigns |
+| `/api/campaigns/[id]/export` | Download campaign package |
+
+---
+
+## Deploy
+
+```bash
+cd apps/web
+npm run build
+```
+
+Deploy to Vercel with environment variables set in the project dashboard.
+
+---
+
+## Relationship to Iron Jarvis
+
+Mythos Director evolved from the [Iron Jarvis](https://github.com/Sm0k367/epic-iron-jarvis) agent OS vision. This repo focuses on one concrete, shippable product: **AI campaign production for marketing teams**.
+
+The Python packages (`supervisor`, `permissions`, `workflow-engine`) remain as foundation code for future agent orchestration. The production app lives in `apps/web`.
+
+---
+
+Built for marketing teams who need campaigns shipped, not slideware.

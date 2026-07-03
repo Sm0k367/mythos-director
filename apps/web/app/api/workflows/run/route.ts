@@ -1,13 +1,39 @@
 import { NextResponse } from 'next/server';
+import { saveCampaign } from '@/lib/store';
+import type { Campaign } from '@/lib/types';
 
 export async function POST(request: Request) {
-  const { name, nodes } = await request.json();
+  const { name, brief } = await request.json();
 
-  // In production this would call the real WorkflowExecutor
+  if (!brief?.product) {
+    return NextResponse.json({ error: 'Workflow requires a campaign brief with product' }, { status: 400 });
+  }
+
+  const id = `camp_${Date.now()}`;
+  const timestamp = new Date().toISOString();
+
+  const campaign: Campaign = {
+    id,
+    name: name || `Campaign ${new Date().toLocaleDateString()}`,
+    brief: {
+      product: brief.product,
+      audience: brief.audience || 'General consumers',
+      goal: brief.goal || 'Increase brand awareness',
+      tone: brief.tone || 'Professional',
+      channels: brief.channels ?? ['instagram', 'linkedin', 'web'],
+    },
+    status: 'draft',
+    events: [],
+    createdAt: timestamp,
+    updatedAt: timestamp,
+  };
+
+  saveCampaign(campaign);
+
   return NextResponse.json({
-    workflow: name,
-    status: "started",
-    nodes: nodes.length,
-    stream_url: `/api/workflows/stream?id=${name}`
+    workflow: campaign.id,
+    status: 'started',
+    stream_url: `/api/campaigns/${campaign.id}/stream`,
+    campaign,
   });
 }

@@ -1,36 +1,60 @@
 import { NextRequest } from 'next/server';
+import { getCampaign } from '@/lib/store';
+import { runCampaignPipeline } from '@/lib/campaign-director';
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const workflowId = searchParams.get('id');
 
+  if (!workflowId) {
+    return new Response(JSON.stringify({ error: 'Missing workflow id' }), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  const campaign = getCampaign(workflowId);
+  if (!campaign) {
+    return new Response(JSON.stringify({ error: 'Workflow not found' }), {
+      status: 404,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
   const stream = new ReadableStream({
     async start(controller) {
       const encoder = new TextEncoder();
 
-      // Simulate live execution
-      const nodes = [
-        { id: 1, type: 'mythos', label: 'Mythos Core' },
-        { id: 2, type: 'omnimedia', label: 'Omnimedia Swarm' },
-        { id: 3, type: 'review', label: 'Human Review' }
-      ];
+      const send = (payload: unknown) => {
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify(payload)}\n\n`));
+      };
 
-      for (const node of nodes) {
-        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'node_start', node })}\n\n`));
-        await new Promise(r => setTimeout(r, 800));
-        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'node_result', node, result: { status: 'done' } })}\n\n`));
+      try {
+        await runCampaignPipeline(workflowId, (event) => {
+          send({
+            type: 'node_result',
+            node: { type: event.step, label: event.step.replace(/_/g, ' ') },
+            result: { status: event.status, message: event.message, data: event.data },
+          });
+        });
+
+        send({ type: 'workflow_complete', campaign: getCampaign(workflowId) });
+      } catch (error) {
+        send({
+          type: 'error',
+          message: error instanceof Error ? error.message : 'Workflow failed',
+        });
+      } finally {
+        controller.close();
       }
-
-      controller.enqueue(encoder.encode(`data: ${JSON.stringify({ type: 'workflow_complete' })}\n\n`));
-      controller.close();
-    }
+    },
   });
 
   return new Response(stream, {
     headers: {
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',
-      'Connection': 'keep-alive'
-    }
+      Connection: 'keep-alive',
+    },
   });
 }
